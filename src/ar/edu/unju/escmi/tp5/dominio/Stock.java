@@ -4,7 +4,7 @@ public class Stock {
     private Producto producto;
     private int cantidad;
 
-    // Constructor 
+    // Constructor
     public Stock() {
     }
 

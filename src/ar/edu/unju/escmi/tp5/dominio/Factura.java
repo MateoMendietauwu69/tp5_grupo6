@@ -5,31 +5,28 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Factura {
-    private int numeroFactura;
     private LocalDate fecha;
     private Cliente cliente;
-    private List<DetalleFactura> detalles;
-    private double totalFinal;
+    private List<Detalle> detalles = new ArrayList<>();
+    private static int contador = 1;
+    private int numeroFactura;
 
     public Factura() {
-        this.detalles = new ArrayList<>();
-        this.totalFinal = 0.0;
+
     }
 
-    public Factura(int numeroFactura, LocalDate fecha, Cliente cliente) {
-        this.numeroFactura = numeroFactura;
+    public Factura(LocalDate fecha, Cliente cliente) {
+        this.numeroFactura = contador++;
         this.fecha = fecha;
         this.cliente = cliente;
-        this.detalles = new ArrayList<>();
-        this.totalFinal = 0.0;
+    }
+
+    public Cliente getCliente() {
+        return cliente;
     }
 
     public int getNumeroFactura() {
         return numeroFactura;
-    }
-
-    public void setNumeroFactura(int numeroFactura) {
-        this.numeroFactura = numeroFactura;
     }
 
     public LocalDate getFecha() {
@@ -40,37 +37,43 @@ public class Factura {
         this.fecha = fecha;
     }
 
-    public Cliente getCliente() {
-        return cliente;
-    }
-
-    public void setCliente(Cliente cliente) {
-        this.cliente = cliente;
-    }
-
-    public List<DetalleFactura> getDetalles() {
+    public List<Detalle> getDetalles() {
         return detalles;
     }
 
-    public double getTotalFinal() {
-        return totalFinal;
+    public void setDetalles(List<Detalle> detalles) {
+        this.detalles = detalles;
     }
 
-    public void agregarDetalle(DetalleFactura detalle) {
+    public void agregarDetalle(Detalle detalle) {
         detalles.add(detalle);
-        this.totalFinal += detalle.getImporte();
+    }
+
+    public double calcularTotal() {
+        double total = 0;
+        for (Detalle d : detalles) {
+            total += d.calcularImporte();
+        }
+        return total;
     }
 
     public void mostrarFactura() {
-        System.out.println("==================================================");
-        System.out.println("Factura N°: " + numeroFactura + " | Fecha: " + fecha);
-        System.out.println("Cliente: " + cliente.getNombre() + " " + cliente.getApellido() + " (DNI: " + cliente.getDni() + ")");
-        System.out.println("--------------------------------------------------");
-        for (DetalleFactura d : detalles) {
-            System.out.println(d);
+        System.out.println("----- FACTURA -----");
+        System.out.println("N°: " + getNumeroFactura());
+        System.out.println("Fecha: " + fecha);
+        System.out.println("Cliente: " + cliente.nombre + " " + cliente.apellido);
+        System.out.println("DNI: " + cliente.dni);
+        System.out.println("Dirección: " + cliente.direccion);
+        System.out.println("-------------------");
+        System.out.println("DETALLE:");
+        for (Detalle d : detalles) {
+            System.out.println("Cantidad: " + d.getCantidad() + "\n" +
+                    "Descripción: " + d.getProducto().getDescripcion() + "\n" +
+                    "Precio Unitario: " + d.getProducto().getPrecio() + "\n" +
+                    "Precio Unitario con Descuento: " + d.getPrecioCalculadoConDescuento() + "\n" +
+                    "Importe: " + d.calcularImporte());
+            System.out.println("-------------------");
         }
-        System.out.println("--------------------------------------------------");
-        System.out.printf("Total: $%.2f\n", totalFinal);
-        System.out.println("==================================================");
+        System.out.println("TOTAL: " + calcularTotal());
     }
 }
