@@ -1,30 +1,25 @@
 package ar.edu.unju.escmi.tp5.collections;
 
-import java.util.ArrayList;
-import java.util.List;
-
+import java.util.HashMap;
+import java.util.Map;
 import ar.edu.unju.escmi.tp5.dominio.Cliente;
 import ar.edu.unju.escmi.tp5.dominio.ClienteMayorista;
-import ar.edu.unju.escmi.tp5.dominio.ClienteMenorista;
+import ar.edu.unju.escmi.tp5.dominio.ClienteMinorista;
 
 public class CollectionCliente {
-    public static List<Cliente> clientes = new ArrayList<>();
+    // La clave del map tiene que ser el DNI
+    public static Map<Integer, Cliente> clientes = new HashMap<>();
 
-    public static void agregarCliente(Cliente cliente){
-        clientes.add(cliente);
+    public static void guardarCliente(Cliente cliente) {
+        clientes.put(cliente.getDni(), cliente);
     }
 
-    public static Cliente buscarCliente(int DNI){
-        for(Cliente cliente : clientes){
-            if(cliente.getDNI().equals(DNI)) return cliente;
-        }
-        return null;
+    public static Cliente buscarCliente(int dni) {
+        return clientes.get(dni);
     }
 
-    public static void precargaClientes(){
-        ClienteMayorista mayorista = new ClienteMayorista("Juan", "Perez", 30111222, "Belgrano 123", 1001);
-        ClienteMenorista menorista = new ClienteMenorista("María", "Gomez", 35222333, "Alvear 456", true);
-        clientes.add(mayorista);
-        clientes.add(menorista);
+    public static void precargarCliente() {
+        clientes.put(123, new ClienteMayorista(123, "Carlos", "Av. Siempre Viva", "Suarez", 1001));
+        clientes.put(456, new ClienteMinorista(456, "Ana", "Calle Belgrano", "Ramirez", "PAMI"));
     }
 }

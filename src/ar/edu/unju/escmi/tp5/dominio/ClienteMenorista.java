@@ -8,7 +8,7 @@ public class ClienteMenorista extends Cliente {
     }
 
     public ClienteMenorista(String nombre, String apellido, int DNI, String dirección, boolean Pami){
-        super(nombre, apellido, DNI, dirección);
+        super(DNI, nombre, dirección, apellido);
         this.Pami = Pami;
     }
 
@@ -16,7 +16,7 @@ public class ClienteMenorista extends Cliente {
         return Pami;
     }
 
-    public void setPami(){
+    public void setPami(boolean Pami){
         this.Pami = Pami;
     }
 
@@ -25,3 +25,4 @@ public class ClienteMenorista extends Cliente {
         return 0;
     }
 }
+
