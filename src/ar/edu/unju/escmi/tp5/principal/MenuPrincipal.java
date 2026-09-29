@@ -12,6 +12,7 @@ import ar.edu.unju.escmi.tp5.dominio.Cliente;
 import ar.edu.unju.escmi.tp5.dominio.ClienteMayorista;
 import ar.edu.unju.escmi.tp5.dominio.ClienteMinorista;
 import ar.edu.unju.escmi.tp5.dominio.Detalle;
+import ar.edu.unju.escmi.tp5.dominio.Stock;
 
 public class MenuPrincipal {
     static void menuCliente(Scanner sc) {
@@ -184,6 +185,7 @@ public class MenuPrincipal {
                                     System.out.print("Ingrese el código del producto: ");
                                     int codigoProductoVenta = sc.nextInt();
                                     Producto producto = CollectionProducto.buscarProducto(codigoProductoVenta);
+                                    Stock stock = CollectionProducto.stocks.get(producto);
                                     if (producto == null) {
                                         System.out.println("Producto no encontrado.");
                                         continue;
@@ -197,9 +199,9 @@ public class MenuPrincipal {
                                     if (cliente instanceof ClienteMayorista) {
                                         cantidadReal = cantidad * 10;
                                     }
-                                    if (producto.getStock() < cantidadReal) {
+                                    if (stock.getCantidad() < cantidadReal) {
                                         System.out.println(
-                                                "Stock insuficiente. Stock disponible: " + producto.getStock());
+                                                "Stock insuficiente. Stock disponible: " + stock.getCantidad());
                                     } else {
                                         if (producto.getDescuento() == 25) {
                                             precioUnitario = precioUnitario * 0.75;
@@ -214,7 +216,7 @@ public class MenuPrincipal {
                                         }
                                         Detalle detalle = new Detalle(producto, cantidadReal, precioUnitario);
                                         factura.agregarDetalle(detalle);
-                                        producto.setStock(producto.getStock() - cantidadReal);
+                                        stock.setCantidad(stock.getCantidad() - cantidadReal);
                                         System.out.println("Detalle agregado con exito ");
                                     }
                                     System.out.print("¿Desea agregar otro producto? (s/n): ");
@@ -222,7 +224,7 @@ public class MenuPrincipal {
                                     seguirComprando = opcion.equalsIgnoreCase("s");
                                 }
                                 AgenteAdministrativo.realizarVenta(factura);
-                                delay(3000);
+                                delay(2000);
                                 break;
                             case 3:
                                 System.out.println("Saliendo del Menu Agente Administrativo...");
@@ -248,6 +250,7 @@ public class MenuPrincipal {
         CollectionCliente.precargarCliente();
         CollectionEmpleado.precargarEmpleado();
         CollectionProducto.precargarProducto();
+        CollectionProducto.precargarStock();
         do {
             System.out.println("\n  Menu de Opciones ");
             System.out.println("1 - Menu de Clientes");
