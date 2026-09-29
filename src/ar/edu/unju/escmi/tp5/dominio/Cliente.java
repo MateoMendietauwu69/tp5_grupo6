@@ -3,17 +3,14 @@ package ar.edu.unju.escmi.tp5.dominio;
 import ar.edu.unju.escmi.tp5.collections.CollectionFactura;
 
 public abstract class Cliente {
-    // Atributos protegidos
     protected int dni;
     protected String nombre;
     protected String apellido;
     protected String direccion;
 
     public Cliente() {
-        // Constructor vacio
     }
 
-    // Constructor parametrizado
     public Cliente(int dni, String nombre, String direccion, String apellido) {
         this.dni = dni;
         this.nombre = nombre;

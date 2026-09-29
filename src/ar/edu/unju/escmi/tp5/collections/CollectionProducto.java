@@ -24,4 +24,20 @@ public class CollectionProducto {
         productos.put(1006, new Producto(1006, "Celusal 1/2Kg", 600.0, 0));
         // El producto consta de: codigo, descripcion, precio, descuento, stock
     }
+
+    public static void mostrarStock() {
+        if (productos.isEmpty()) System.out.println("No hay productos en stock.");
+        else {
+            System.out.println("===== PRODUCTOS Y STOCK =====");
+            for (Producto producto : productos.values()) {
+                System.out.println(
+                    "Código: " + producto.getCodigoProducto()
+                    + " | Producto: " + producto.getDescripcion()
+                    + " | Precio: $" + producto.getPrecio()
+                    + " | Descuento: " + producto.getDescuento() + "%"
+                    + " | Stock: " + producto.getStock()
+                );
+            }
+        }
+    }   
 }

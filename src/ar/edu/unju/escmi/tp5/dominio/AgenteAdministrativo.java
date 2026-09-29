@@ -8,11 +8,9 @@ import ar.edu.unju.escmi.tp5.collections.CollectionFactura;
 public class AgenteAdministrativo extends Empleado {
     private static Scanner scanner = new Scanner(System.in);
 
-    // Constructor por defecto
     public AgenteAdministrativo() {
     }
 
-    // Constructor parametrizado
     public AgenteAdministrativo(int idEmpleado, String nombre, String apellido, int dni, String domicilio) {
         super(idEmpleado, nombre, apellido, dni, domicilio);
     }
@@ -29,7 +27,6 @@ public class AgenteAdministrativo extends Empleado {
     }
 
     public static void realizarVenta(Factura factura) {
-        // Paso 6: Guardar factura
         factura.calcularTotal();
         CollectionFactura.guardarFactura(factura);
         System.out.println("Factura generada exitosamente:\n");
