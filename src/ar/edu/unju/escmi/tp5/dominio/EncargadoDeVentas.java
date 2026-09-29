@@ -58,15 +58,15 @@ public class EncargadoDeVentas extends Empleado {
     // VerificarStock
     public static void verificarStock(int codigo) { // Se añade el código como parámetro
 
-        Producto producto = CollectionProducto.buscarProducto(codigo); // Busca el producto en la colección
-
+        Producto producto = CollectionProducto.buscarProducto(codigo); 
+        Stock stock = CollectionProducto.stocks.get(producto); 
         if (producto != null) { // Si el producto existe
 
             System.out.println("Producto encontrado: " + producto.getDescripcion());
 
-            if (producto.getStock() > 0) { // Si hay stock
-                System.out.println("El producto está en stock (" + producto.getStock() + " unidades).");
-            } else { // Si no hay stock
+            if (stock != null && stock.getCantidad() > 0) { 
+                System.out.println("El producto está en stock (" + stock.getCantidad() + " unidades).");
+            } else { 
                 System.out.println("El producto no tiene stock.");
             }
 

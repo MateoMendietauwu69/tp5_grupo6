@@ -3,10 +3,11 @@ package ar.edu.unju.escmi.tp5.collections;
 import java.util.HashMap;
 import java.util.Map;
 import ar.edu.unju.escmi.tp5.dominio.Producto;
+import ar.edu.unju.escmi.tp5.dominio.Stock;
 
 public class CollectionProducto {
     public static Map<Integer, Producto> productos = new HashMap<>();
-
+    public static Map<Producto, Stock> stocks = new HashMap<>();
     public static void guardarProducto(Producto producto) {
         productos.put(producto.getCodigoProducto(), producto);
     }
@@ -25,6 +26,12 @@ public class CollectionProducto {
         // El producto consta de: codigo, descripcion, precio, descuento, stock
     }
 
+    public static void precargarStock() {
+        for (Producto producto : productos.values()) {
+            stocks.put(producto, new Stock(producto, 5000));
+        }
+    }
+
     public static void mostrarStock() {
         if (productos.isEmpty()) System.out.println("No hay productos en stock.");
         else {
@@ -35,7 +42,7 @@ public class CollectionProducto {
                     + " | Producto: " + producto.getDescripcion()
                     + " | Precio: $" + producto.getPrecio()
                     + " | Descuento: " + producto.getDescuento() + "%"
-                    + " | Stock: " + producto.getStock()
+                    + " | Stock: " + stocks.get(producto).getCantidad() + " unidades"
                 );
             }
         }
