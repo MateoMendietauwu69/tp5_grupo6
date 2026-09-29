@@ -15,11 +15,12 @@ import ar.edu.unju.escmi.tp5.dominio.Detalle;
 
 public class MenuPrincipal {
     static void menuCliente(Scanner sc) {
-        byte op;
+        byte op, cl;
         do {
             System.out.println("\n **** Menu de Cliente ****");
             System.out.println("1 - Buscar Factura");
-            System.out.println("2 - Salir");
+            System.out.println("2 - Registrar cliente");
+            System.out.println("3 - Salir");
             System.out.print("Ingrese una opcion: ");
             op = sc.nextByte();
             sc.nextLine();
@@ -33,13 +34,56 @@ public class MenuPrincipal {
                     delay(3000);
                     break;
                 case 2:
+                    System.out.println("Registrar cliente");
+                    System.out.println("1. Cliente Mayorista - 2. Cliente Minorista");
+                    cl = sc.nextByte();
+                    sc.nextLine();
+                    do{
+                        if (cl != 1 && cl != 2) {
+                            System.out.println("Opcion incorrecta. Intente nuevamente.");
+                            System.out.println("1. Cliente Mayorista - 2. Cliente Minorista");
+                            cl = sc.nextByte();
+                            sc.nextLine();
+                        }
+                    } while (cl != 1 && cl != 2);
+                    int dni;
+                    do {
+                        System.out.print("Ingrese DNI: ");
+                        dni = sc.nextInt();
+                        sc.nextLine();
+                        if (CollectionCliente.buscarCliente(dni) != null) {
+                            System.out.println("El cliente con DNI " + dni + " ya existe. Intente nuevamente.");
+                        }
+                    } while (CollectionCliente.buscarCliente(dni) != null);
+                    System.out.print("Ingrese nombre: ");
+                    String nombre = sc.nextLine();
+                    System.out.print("Ingrese apellido: ");
+                    String apellido = sc.nextLine();
+                    System.out.print("Ingrese direccion: ");
+                    String direccion = sc.nextLine();
+                    if (cl == 1) {
+                        System.out.print("Ingrese codigo: ");
+                        int codigo = sc.nextInt();
+                        sc.nextLine();
+                        ClienteMayorista clienteMayorista = new ClienteMayorista(dni, nombre, direccion, apellido, codigo);
+                        CollectionCliente.guardarCliente(clienteMayorista);
+                    } else {
+                        System.out.print("Ingrese obra social: ");
+                        String obraSocial = sc.nextLine();
+                        ClienteMinorista clienteMinorista = new ClienteMinorista(dni, nombre, direccion, apellido, obraSocial);
+                        CollectionCliente.guardarCliente(clienteMinorista);
+                    }
+                    System.out.println("Cliente registrado correctamente.");
+                    delay(2000);
+                    break;
+                case 3:
                     System.out.println("Saliendo del Menu de Clientes...");
                     delay(1000);
                     break;
                 default:
                     System.out.println("Opcion incorrecta. Intente nuevamente.");
             }
-        } while (op != 2);
+        } while (op != 3);
     }
 
     static void menuEmpleado(Scanner sc) {
@@ -205,10 +249,11 @@ public class MenuPrincipal {
         CollectionEmpleado.precargarEmpleado();
         CollectionProducto.precargarProducto();
         do {
-            System.out.println("\n **** Menu de Opciones ****");
+            System.out.println("\n  Menu de Opciones ");
             System.out.println("1 - Menu de Clientes");
             System.out.println("2 - Menu de Empleados");
-            System.out.println("3 - Salir");
+            System.out.println("3 - Ver Stock");
+            System.out.println("4 - Salir");
             System.out.print("Ingrese una opcion: ");
             op = sc.nextByte();
             sc.nextLine();
@@ -220,12 +265,15 @@ public class MenuPrincipal {
                     menuEmpleado(sc);
                     break;
                 case 3:
+                    CollectionProducto.mostrarStock();
+                    break;
+                case 4:
                     System.out.println("Saliendo del programa...");
                     break;
                 default:
                     System.out.println("Opcion incorrecta. Intente nuevamente.");
             }
-        } while (op != 3);
+        } while (op != 4);
         sc.close();
     }
     public static void delay(int milisegundos) {

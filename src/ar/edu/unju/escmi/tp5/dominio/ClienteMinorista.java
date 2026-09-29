@@ -4,10 +4,8 @@ public class ClienteMinorista extends Cliente {
     private String obraSocial;
 
     public ClienteMinorista() {
-        // Constructor vacio
     }
 
-    // Constructor parametrizado(con los atributos de la superclase)
     public ClienteMinorista(int dni, String nombre, String direccion, String apellido, String obraSocial) {
         super(dni, nombre, direccion, apellido);
         this.obraSocial = obraSocial;
@@ -42,7 +40,7 @@ public class ClienteMinorista extends Cliente {
             }
         } else {
             System.out.println("El cliente no esta identificado.");
-            return precio; // No hay descuento
+            return precio;
         }
     }
 
