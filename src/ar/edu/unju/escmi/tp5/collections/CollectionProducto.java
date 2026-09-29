@@ -11,7 +11,9 @@ public class CollectionProducto {
     public static void guardarProducto(Producto producto) {
         productos.put(producto.getCodigoProducto(), producto);
     }
-
+    public static void guardarStock(Producto producto, Stock stock) {
+        stocks.put(producto, stock);
+    }
     public static Producto buscarProducto(int codigoProducto) {
         return productos.get(codigoProducto);
     }

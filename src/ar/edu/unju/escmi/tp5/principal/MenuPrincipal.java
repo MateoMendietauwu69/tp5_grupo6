@@ -165,8 +165,12 @@ public class MenuPrincipal {
                                         System.out.println("Valor inválido. Solo se permite 0, 25 o 30.");
                                     }
                                 } while (descuento != 0 && descuento != 25 && descuento != 30);
+                                System.out.print("Ingrese stock inicial: ");
+                                int stockInicial = sc.nextInt();
                                 Producto productoNuevo = new Producto(codigoProducto, descripcion, precioUnitarioNuevo,
                                         descuento);
+                                Stock stockNuevo = new Stock(productoNuevo, stockInicial);
+                                CollectionProducto.guardarStock(productoNuevo, stockNuevo);
                                 AgenteAdministrativo.altaProducto(productoNuevo);
                                 System.out.println("Producto dado de alta correctamente.");
                                 delay(2000);
